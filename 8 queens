@@ -1,0 +1,26 @@
+def solve_queens(n=8):
+    def is_safe(pos, col):
+        for i in range(col):
+            if (pos[i] == pos[col] or 
+                abs(pos[i] - pos[col]) == abs(i - col)):
+                return False
+        return True
+    
+    def solve(col):
+        if col == n:
+            return True
+        for row in range(n):
+            pos[col] = row
+            if is_safe(pos, col) and solve(col + 1):
+                return True
+        return False
+    pos = [0] * n
+    if solve(0):
+        board = [['.' for _ in range(n)] for _ in range(n)]
+        for col in range(n):
+            board[pos[col]][col] = 'Q'
+        for row in board:
+            print(' '.join(row))
+    else:
+        print("No solution exists")
+solve_queens()
