@@ -1,0 +1,25 @@
+def vacuum_cleaner():
+    # Initializing the environment (rooms and their states)
+    environment = {
+        "A": "Dirty",
+        "B": "Dirty"
+    }
+    current_location = "A"  # Vacuum starts at room A
+    print("Initial environment:", environment)
+
+    actions = []
+    while "Dirty" in environment.values():  # Continue until both rooms are clean
+        if environment[current_location] == "Dirty":
+            environment[current_location] = "Clean"
+            actions.append(f"Cleaned {current_location}")
+        else:
+            # Move to the other room
+            current_location = "B" if current_location == "A" else "A"
+            actions.append(f"Moved to {current_location}")
+
+    print("Final environment:", environment)
+    print("Actions taken:", actions)
+
+# Run the program
+if __name__ == "__main__":
+    vacuum_cleaner()
