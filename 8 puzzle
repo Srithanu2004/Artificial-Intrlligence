@@ -1,0 +1,55 @@
+from collections import deque
+
+def get_blank_position(state):
+    for i in range(3):
+        for j in range(3):
+            if state[i][j] == 0:
+                return i, j
+
+def get_next_states(state):
+    moves = []
+    i, j = get_blank_position(state)
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up
+    
+    for dx, dy in directions:
+        new_i, new_j = i + dx, j + dy
+        if 0 <= new_i < 3 and 0 <= new_j < 3:
+            new_state = [row[:] for row in state]
+            new_state[i][j], new_state[new_i][new_j] = new_state[new_i][new_j], new_state[i][j]
+            moves.append(new_state)
+    return moves
+
+def solve_puzzle(initial_state):
+    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+    queue = deque([(initial_state, [])])
+    seen = set()
+    
+    while queue:
+        current_state, path = queue.popleft()
+        board_tuple = tuple(tuple(row) for row in current_state)
+        
+        if current_state == goal_state:
+            return len(path)
+        
+        if board_tuple in seen:
+            continue
+            
+        seen.add(board_tuple)
+        
+        for next_state in get_next_states(current_state):
+            queue.append((next_state, path + [next_state]))
+    
+    return None
+
+# Example usage
+initial = [
+    [1, 2, 3],
+    [4, 0, 6],
+    [7, 5, 8]
+]
+
+steps = solve_puzzle(initial)
+if steps is not None:
+    print(f"Puzzle can be solved in {steps} moves")
+else:
+    print("No solution found")
