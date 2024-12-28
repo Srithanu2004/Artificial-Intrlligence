@@ -1,0 +1,31 @@
+class Graph:
+    def __init__(self):
+        self.graph = {}
+    def add_edge(self, vertex, edge):
+        if vertex not in self.graph:
+            self.graph[vertex] = []
+        if edge not in self.graph[vertex]:
+            self.graph[vertex].append(edge)
+    def dfs(self, start_vertex):
+        visited = set()
+        traversal = []
+        def dfs_recursive(vertex):
+            visited.add(vertex)
+            traversal.append(vertex)
+            if vertex in self.graph:
+                for neighbor in self.graph[vertex]:
+                    if neighbor not in visited:
+                        dfs_recursive(neighbor)
+        dfs_recursive(start_vertex)
+        return traversal
+if __name__ == "__main__":
+    g = Graph()
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(2, 0)
+    g.add_edge(2, 3)
+    g.add_edge(3, 3)
+    print("DFS starting from vertex 2:")
+    dfs_result = g.dfs(2)
+    print(dfs_result)
