@@ -1,0 +1,37 @@
+class MonkeyBananaProblem:
+    def __init__(self):
+        self.monkey_position = "floor"
+        self.banana_position = "ceiling"
+        self.box_position = "floor"
+        self.monkey_on_box = False
+
+    def climb_box(self):
+        if self.monkey_position == "floor" and self.box_position == "floor":
+            self.monkey_position = "on_box"
+            self.monkey_on_box = True
+            print("Monkey climbs on the box.")
+        else:
+            print("Monkey cannot climb the box.")
+
+    def move_box(self):
+        if self.box_position == "floor":
+            self.box_position = "under_banana"
+            print("Box moved under the bananas.")
+        else:
+            print("Box is already under the bananas.")
+
+    def grab_banana(self):
+        if self.monkey_on_box and self.box_position == "under_banana":
+            print("Monkey grabs the bananas!")
+        else:
+            print("Monkey cannot reach the bananas.")
+
+    def solve_problem(self):
+        print("Starting the Monkey-Banana problem simulation...")
+
+        self.move_box()
+        self.climb_box()
+        self.grab_banana()
+if __name__ == "__main__":
+    problem = MonkeyBananaProblem()
+    problem.solve_problem()
