@@ -1,0 +1,26 @@
+def water_jug_solve(x, y, target):
+    jug1, jug2 = 0, 0
+    print(f"Initial state: ({jug1}, {jug2})")
+    
+    while (jug1 != target and jug2 != target):
+        if jug1 == 0:  
+            jug1 = x
+            print(f"Fill jug1: ({jug1}, {jug2})")
+            
+        elif jug2 != y:  
+            transfer = min(jug1, y - jug2)
+            jug1 -= transfer
+            jug2 += transfer
+            print(f"Pour jug1 to jug2: ({jug1}, {jug2})")
+            
+        elif jug2 == y:  
+            jug2 = 0
+            print(f"Empty jug2: ({jug1}, {jug2})")
+        if jug1 == x and jug2 == 0:
+            print("No solution possible!")
+            return False
+        if jug1 == target or jug2 == target:
+            print(f"Target achieved: ({jug1}, {jug2})")
+            return True
+print("Water Jug Problem Solution:")
+water_jug_solve(4, 3, 2)  # Jug1 = 4L, Jug2 = 3L, Target = 2L
