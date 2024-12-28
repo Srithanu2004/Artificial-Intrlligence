@@ -1,0 +1,40 @@
+def is_safe(state, color, graph, colors):
+    # Check if the given color is safe for the state
+    for neighbor in graph[state]:
+        if colors.get(neighbor) == color:
+            return False
+    return True
+
+def map_coloring(graph, states, color_options, colors={}, index=0):
+    if index == len(states):
+        return colors  # All states are colored successfully
+
+    state = states[index]
+    for color in color_options:
+        if is_safe(state, color, graph, colors):
+            colors[state] = color  # Assign color
+            result = map_coloring(graph, states, color_options, colors, index + 1)
+            if result:
+                return result
+            colors[state] = None  # Backtrack
+
+    return None  # No solution found
+
+# Example Usage
+if __name__ == "__main__":
+    # Define the map as a graph (neighbors of each state)
+    graph = {
+        "A": ["B", "C", "D"],
+        "B": ["A", "C"],
+        "C": ["A", "B", "D"],
+        "D": ["A", "C"]
+    }
+    states = list(graph.keys())
+    color_options = ["Red", "Green", "Blue"]
+
+    solution = map_coloring(graph, states, color_options)
+    if solution:
+        print("Coloring Solution:", solution)
+    else:
+        print("No solution found")
+
