@@ -1,0 +1,43 @@
+import itertools
+
+def calculate_distance(route, distance_matrix):
+    """Calculate the total distance for a given route."""
+    total_distance = 0
+    for i in range(len(route) - 1):
+        total_distance += distance_matrix[route[i]][route[i + 1]]
+    # Add the distance from the last city back to the first city
+    total_distance += distance_matrix[route[-1]][route[0]]
+    return total_distance
+
+def travelling_salesman(distance_matrix):
+    """Solve the Travelling Salesman Problem using brute force."""
+    num_cities = len(distance_matrix)
+    cities = list(range(num_cities))
+
+    # Generate all possible routes (permutations of cities)
+    all_routes = itertools.permutations(cities)
+
+    # Initialize variables to store the shortest route and its distance
+    shortest_distance = float('inf')
+    best_route = None
+
+    # Evaluate each route
+    for route in all_routes:
+        current_distance = calculate_distance(route, distance_matrix)
+        if current_distance < shortest_distance:
+            shortest_distance = current_distance
+            best_route = route
+
+    return best_route, shortest_distance
+
+# Example usage
+distance_matrix = [
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+]
+
+best_route, shortest_distance = travelling_salesman(distance_matrix)
+print("Best Route:", best_route)
+print("Shortest Distance:", shortest_distance)
